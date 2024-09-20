@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Cards from "./Cards";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const ActionAnime = () => {
@@ -16,7 +17,7 @@ const ActionAnime = () => {
         let res = await axios.get("http://localhost:3000/anime");
         const data = res.data;
         const filterData = data.filter((item) => {
-          return item.category === "Action";
+          return item.genre === "Action";
         });
         console.log(filterData);
         console.log(res.data);
@@ -76,19 +77,15 @@ const ActionAnime = () => {
 
   return (
     <>
-      <div className="max-w-screen-2xl flex flex-col items-center justify-center container mx-auto md:px-20 px-4">
-        <div>
-          <h1 className="font-semibold text-xl pb-2 text-yellow-500">
-            Popular Genere
-          </h1>
-          <p>
-            Dive into our thrilling action anime collection! Experience epic
-            battles, heroic journeys, and powerful friendships as our characters
-            face overwhelming odds and strive for greatness. Whether it's
-            ninjas, pirates, or soul reapers, each story promises intense action
-            and unforgettable moments!
-          </p>
-        </div>
+      <div className="max-w-screen-2xl flex flex-col items-center justify-center container mx-auto md:px-20 px-4 mt-32">
+        <span className=" flex flex-col font-bold z-10">
+          <span className="text-5xl text-center text-white">Buy Comics</span>
+          <Link to={"/collection"} className="text-center">
+            <button className="mt-5 bg-white py-2 px-5 rounded-full text-black hover:bg-pink-600">
+              Checkout
+            </button>
+          </Link>
+        </span>
 
         <div className="lg:w-2/3 w-11/12">
           <Slider key={sliderKey} {...settings}>
@@ -103,4 +100,3 @@ const ActionAnime = () => {
 };
 
 export default ActionAnime;
-

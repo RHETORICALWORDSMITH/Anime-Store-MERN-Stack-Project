@@ -6,18 +6,19 @@ import axios from "axios";
 import { useSearchedAnime } from "../context/searchProvider.jsx";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import logo from "../../public/logo/logo.webp"
 
 const Navbar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(""); // the term that the user searches and is sent to the backend as a request also to set the value of input tag
   //for usecontext
-  const [search, setSearch] = useSearchedAnime();
+  const [search, setSearch] = useSearchedAnime(); // this is used to receive the response and then set state for the required components
 
 
   const navigate = useNavigate(); // Initialize navigate
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    // console.log(event.target.value);
+    console.log(event.target.value);
   };
 
   const handleSubmit = async (event) => {
@@ -30,11 +31,11 @@ const Navbar = () => {
       if (searchInfo.length > 0) {
         console.log(searchInfo); // Handle the response data as needed
         setSearch(searchInfo);
-        if (window.location != "http://localhost:5174/collection") {
+        if (window.location != "http://localhost:5173/collection") {
           navigate("/collection");
         }
       }else{
-        toast.error("This anime does not exists!")
+        toast.error("invalid Item check your input!");
       }
       // Programmatically navigate to /collection
     } catch (error) {
@@ -84,7 +85,7 @@ const Navbar = () => {
         <a href="/">Home</a>
       </li>
       <li>
-        <a href="/collection">Collection</a>
+        <a href="/collection">Products</a>
       </li>
       <li>
         <a href="/cart">Cart</a>
@@ -92,12 +93,15 @@ const Navbar = () => {
       <li>
         <a href="/purchaseHistory">Purchase History</a>
       </li>
+      <li>
+        <a href="/dashboard">Dashboard</a>
+      </li>
     </>
   );
 
   return (
     <div
-      className={`max-w-screen-2xl shadow-2xl container mx-auto md:px-20 px-4 fixed top-0 left-0 right-0 z-10 bg-white text-black dark:bg-slate-900 dark:text-white ${
+      className={`max-w-screen-2xl shadow-2xl container mx-auto md:px-20 px-4 fixed top-0 left-0 right-0 z-50 bg-white text-black dark:bg-slate-900 dark:text-white ${
         sticky
           ? "sticky-navbar shadow-md bg-base-200 duration-300 transition-all ease-in-out"
           : ""
@@ -129,7 +133,7 @@ const Navbar = () => {
               {navItems}
             </ul>
           </div>
-          <a className="text-2xl font-bold cursor-pointer">Anime Store</a>
+          <a><img src={logo} className="w-16 cursor-pointer rounded-full"/></a>
         </div>
         <div className="navbar-end space-x-3">
           <div className="navbar-center hidden lg:flex">

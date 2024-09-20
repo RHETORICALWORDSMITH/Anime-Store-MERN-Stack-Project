@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
-import Clock from "./Clock";
 import Footer from "./Footer";
 import { useSelector } from "react-redux";
 
 const PurchaseHistory = () => {
   const currEmail = useSelector((state) => state.email.currEmail);
-  console.log("currEmail");
-  console.log(currEmail);
   const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isHistory, setisHistory] = useState(false);
 
   useEffect(() => {
     const getHistory = async () => {
@@ -21,85 +16,92 @@ const PurchaseHistory = () => {
         const data = res.data;
 
         const filteredData = data.filter((item) => item.email === currEmail);
-        console.log("filteredData");
-        console.log(filteredData);
-
-        setHistory(filteredData); // Set the fetched data to state
+        setHistory(filteredData);
       } catch (err) {
-        console.error(err);
         setError(err);
-      } finally {
-        setLoading(false); // Set loading to false when done
       }
     };
 
     getHistory();
-  }, []);
-  console.log("history");
-  console.log(history);
+  }, [currEmail]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error)
+    return <p className="text-center text-red-600">Error: {error.message}</p>;
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 mt-16">
       <Navbar />
-      <Clock />
-      <div className="overflow-auto h-96  mb-28 no-scrollbar">
-        <table className="table mx-auto w-full md:w-auto">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-black dark:text-white text-xl">Item</th>
-              <th className="text-black dark:text-white text-xl">Date</th>
-              <th className="text-black dark:text-white text-xl">Count</th>
-              <th className="text-black dark:text-white text-xl">Bill</th>
-            </tr>
-          </thead>
-          <tbody>
-            {history.map((item) => (
-              <tr key={item._id}>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src={
-                            item.image ||
-                            "https://img.daisyui.com/images/profile/demo/2@94.webp"
-                          }
-                          alt={item.name || "Item Image"}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">{item.name}</div>
-                      <div className="text-sm opacity-50">{`Address: ${item.location}`}</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  {new Date(item.date).toLocaleDateString()}
-                  <br />
-                  <span className="badge badge-ghost badge-sm">
-                    {item.category}
-                  </span>
-                </td>
-                <td>{item.noItem}</td>
-                <td>
-                  <button className="btn btn-ghost btn-xs">{item.price * item.noItem}$</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {history.length == 0 && (
-          <div className="text-red-500 w-auto flex justify-center items-center mt-5 mb-16  text-5xl">
-            Buy Something! <span className="emoji emoji-large">💀</span>
+
+      <div className="container mx-auto p-6">
+        <h1 className="text-4xl font-bold text-center mb-10 text-gray-800 dark:text-gray-100">
+          Purchase History
+        </h1>
+
+        {history.length > 0 ? (
+          <div className="max-h-[500px] overflow-y-auto shadow-lg rounded-lg">
+            <table className="min-w-full table-auto bg-white dark:bg-gray-800 rounded-lg">
+              <thead className="sticky top-0 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white dark:bg-gradient-to-r dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 z-10">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                    Item
+                  </th>
+
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                    Quantity
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                    Price
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="overflow-y-scroll">
+                {history.map((item) => (
+                  <tr
+                    key={item._id}
+                    className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                  >
+                    <td className="px-6 py-4 flex flex-col gap-1">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                        {item.name}
+                      </p>
+                      <img
+                        src={
+                          item.image ||
+                          "https://img.daisyui.com/images/profile/demo/2@94.webp"
+                        }
+                        alt={item.name || "Item Image"}
+                        className="w-20 object-cover shadow-lg"
+                      />
+                      <span className="px-3 py-1 rounded bg-pink-500 dark:text-white text-xs font-semibold w-fit">
+                        {item.category}
+                      </span>
+                      <div></div>
+                    </td>
+
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="p-2 bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-500 dark:bg-yellow-700 dark:hover:bg-yellow-600 transition-colors duration-200">
+                        Items: {item.noItem}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <button className="px-4 py-2  text-white bg-black rounded-lg shadow dark:text-black dark:bg-white">
+                        {item.price * item.noItem}$
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-[500px] bg-gray-700 rounded-lg">
+            <p className="text-2xl text-red-500">
+              No Purchase History Found
+            </p>
+            <span className="text-6xl mt-4">🛒</span>
           </div>
         )}
       </div>
-
       <Footer />
     </div>
   );

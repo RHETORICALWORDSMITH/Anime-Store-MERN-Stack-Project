@@ -1,0 +1,4 @@
+/* Custom CSS for clip-path */
+.clip-path-diagonal {
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
