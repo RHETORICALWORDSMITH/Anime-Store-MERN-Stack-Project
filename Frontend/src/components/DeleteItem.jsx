@@ -10,7 +10,7 @@ const DeleteItem = () => {
 
   const getProductDetails = async () => {
     try {
-      const response = await fetch("http://localhost:3000/delete", {
+      const response = await fetch("https://anime-store-backend.vercel.app/delete", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const DeleteItem = () => {
   const deleteProduct = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/delete", {
+      const response = await fetch("https://anime-store-backend.vercel.app/delete", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
