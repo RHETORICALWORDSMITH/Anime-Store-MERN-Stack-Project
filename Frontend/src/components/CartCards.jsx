@@ -76,7 +76,7 @@ const CartCards = () => {
     // sending post rquest to send data to the backend
     try {
       const res = await axios.post(
-        "http://localhost:3000/history/",
+        "https://anime-store-backend.vercel.app/history/",
         dataToSend
       );
       console.log(res.data);
