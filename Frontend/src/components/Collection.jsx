@@ -37,7 +37,7 @@ const Collection = () => {
       setColHead(currentProduct);
 
       //Loads product Section
-      const res = await axios.get(`http://localhost:3000/anime/`);
+      const res = await axios.get(`https://anime-store-backend.vercel.app/anime/`);
 
       const desiredCategory = res.data.filter((item) => {
         return item.category.includes(currentProduct);
@@ -57,7 +57,7 @@ const Collection = () => {
     setIsChecked(currState);
     if (currState === false) {
       const recoverAnime = async () => {
-        const res = await axios.get(`http://localhost:3000/anime/`);
+        const res = await axios.get(`https://anime-store-backend.vercel.app/anime/`);
         setAnime(res.data);
       };
       recoverAnime();
@@ -79,7 +79,7 @@ const Collection = () => {
         }
 
         if (searchName) {
-          const res = await axios.get(`http://localhost:3000/anime/`);
+          const res = await axios.get(`https://anime-store-backend.vercel.app/anime/`);
           const requiredAnime = res.data.filter((item) =>
             item.name.includes(searchName)
           );
@@ -88,7 +88,7 @@ const Collection = () => {
 
           // console.log("the thing you searchde" + searchName);
         } else {
-          const res = await axios.get(`http://localhost:3000/anime/`);
+          const res = await axios.get(`https://anime-store-backend.vercel.app/anime/`);
           const Comics = res.data.filter((item) => {
             return item.category.includes("Comics");
           });
@@ -106,7 +106,7 @@ const Collection = () => {
     const getAnimeViaFil = async () => {
       try {
         if (filterName) {
-          const res = await axios.get(`http://localhost:3000/anime/`);
+          const res = await axios.get(`https://anime-store-backend.vercel.app/anime/`);
           const requiredCategory = res.data.filter((item) => {
             return item.category.includes(colHead);
           });
@@ -150,7 +150,7 @@ const Collection = () => {
     event.preventDefault();
     try {
       const response = await axios.get(
-        `http://localhost:3000/search/${searchTerm}`
+        `https://anime-store-backend.vercel.app/search/${searchTerm}`
       );
       const searchInfo = response.data;
       if (searchInfo.length > 0) {
