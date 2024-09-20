@@ -28,7 +28,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/user/login",
+        "https://anime-store-backend.vercel.app/user/login",
         userInfo
       );
       const resData = res.data;
