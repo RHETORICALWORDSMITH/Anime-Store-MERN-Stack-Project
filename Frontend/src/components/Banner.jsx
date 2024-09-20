@@ -20,7 +20,7 @@ const Banner = () => {
     event.preventDefault();
     try {
       const response = await axios.get(
-        `http://localhost:3000/search/${searchTerm}`
+        `https://anime-store-backend.vercel.app/search/${searchTerm}`
       );
       const searchInfo = response.data;
       if (searchInfo.length > 0) {
