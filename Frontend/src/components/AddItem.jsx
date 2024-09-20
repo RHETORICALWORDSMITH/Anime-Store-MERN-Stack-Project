@@ -54,7 +54,7 @@ const AddItem = () => {
           ))}
         </div>
         <form
-          action="http://localhost:3000/upload"
+          action="https://anime-store-backend.vercel.app/upload"
           encType="multipart/form-data"
           method="POST"
           className="space-y-4"
