@@ -12,7 +12,19 @@ import bodyParser from 'body-parser';
 
 dotenv.config();
 const app = express();
-app.use(cors());
+// app.use(cors())
+// Define allowed origins
+const allowedOrigins = ['https://anime-store-frontend.vercel.app'];
+
+// CORS configuration
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+}));
+
+// Handle preflight requests
+app.options('*', cors());
 app.use(express.json());
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
