@@ -22,7 +22,7 @@ const URI = process.env.MONGODB_URI;
 //connect to mongodb
 const mongooseConnect = async () => {
   try {
-    await mongoose.connect(`${URI}AnimeStore`);
+    await mongoose.connect(`${URI}AnimeStoreDatabase`);
     console.log("Connected: " + mongoose.connection.host);
   } catch (e) {
     console.log("Error connecting to MongoDB");
